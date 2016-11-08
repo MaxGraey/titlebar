@@ -6,6 +6,7 @@ var defaultcss   = require('defaultcss');
 var domify 	     = require('domify');
 
 var ALT = 18;
+var ESC = 27;
 
 var style = fs.readFileSync(__dirname + '/index.css', 'utf-8');
 var html  = fs.readFileSync(__dirname + '/index.html', 'utf-8');
@@ -47,6 +48,18 @@ class TitleBar extends EventEmitter {
 			this.emit(this._isMaximaized ? 'unmaximize' : 'maximize', e);
 			this._isMaximaized = !this._isMaximaized;
 		});
+
+		window.addEventListener('blur', (e) => {
+            close.classList.add('blur');
+            minimize.classList.add('blur');
+            fullscreen.classList.add('blur');
+        });
+
+        window.addEventListener('focus', (e) => {
+            close.classList.remove('blur');
+            minimize.classList.remove('blur');
+            fullscreen.classList.remove('blur');
+        });
 	}
 
 	appendTo(target) {
@@ -57,6 +70,7 @@ class TitleBar extends EventEmitter {
 		var element = this.element;
 		window.addEventListener('keydown', this._onkeydown = (e) => {
 			if (e.keyCode === ALT) element.classList.add('alt');
+			if (e.keyCode === ESC) this.emit('fullscreen', e);
 		});
 
 		window.addEventListener('keyup', this._onkeyup = (e) => {

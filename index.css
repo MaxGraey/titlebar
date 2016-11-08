@@ -2,6 +2,10 @@
 	padding: 0 0;
 }*/
 
+.titlebar {
+	z-index: 1000;
+}
+
 .titlebar.webkit-draggable {
 	-webkit-app-region: drag;
 }
@@ -42,6 +46,13 @@
 	margin: -1px -3px;
 	line-height: 0;
 	transform: scale(0.5);
+}
+
+.titlebar-close.blur,
+.titlebar-minimize.blur,
+.titlebar-fullscreen.blur {
+    background-color: #e7e7e7;
+	border-color: 	  #cacaca;
 }
 
 .titlebar.webkit-draggable .titlebar-close,
